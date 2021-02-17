@@ -14,6 +14,7 @@ class GoBoard {
             throw new Error('signMap is not well-formed')
         }
 
+        this._noCapture = true
         this._players = [1, -1]
         this._captures = [0, 0]
         this._koInfo = {sign: 0, vertex: [-1, -1]}
@@ -40,6 +41,10 @@ class GoBoard {
         return this
     }
 
+    setNoCatpure(noCapture) {
+        _noCapture = noCapture
+    }
+
     makeMove(sign, vertex, {
         preventSuicide = false,
         preventOverwrite = false,
@@ -63,6 +68,9 @@ class GoBoard {
         }
 
         move.set(vertex, sign)
+        if (this._noCapture) {
+            return move
+        }
 
         // Remove captured stones
 
